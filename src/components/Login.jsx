@@ -18,7 +18,6 @@ function Login() {
     });
 
     if (response.ok) {
-      // Handle successful login
       alert('Login successful!');
     } else {
       alert('Login failed!');
@@ -26,15 +25,15 @@ function Login() {
   };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-100">
+    <div className="flex justify-center items-center min-h-screen bg-gray-50">
       <form className="bg-white p-8 rounded-lg shadow-lg w-full max-w-sm" onSubmit={handleSubmit}>
-        <h2 className="text-2xl font-bold text-center mb-4">Login</h2>
+        <h2 className="text-2xl font-bold text-center mb-4 text-red-600">Login</h2>
         <div className="mb-4">
           <label htmlFor="email" className="block text-sm font-semibold text-gray-600">Email</label>
           <input
             type="email"
             id="email"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
@@ -45,13 +44,13 @@ function Login() {
           <input
             type="password"
             id="password"
-            className="w-full px-4 py-2 border border-gray-300 rounded-md"
+            className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-red-600"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
           />
         </div>
-        <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded-md">Login</button>
+        <button type="submit" className="w-full bg-red-600 text-white py-2 rounded-md">Login</button>
       </form>
     </div>
   );
