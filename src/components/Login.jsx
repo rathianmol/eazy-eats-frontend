@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -18,7 +20,11 @@ function Login() {
     });
 
     if (response.ok) {
-      alert('Login successful!');
+        alert('Login successful!');
+        const data = await response.json();
+        // Save the token in localStorage after successful login
+        localStorage.setItem('token', data.token);
+        navigate('/create-orders');
     } else {
       alert('Login failed!');
     }
