@@ -102,19 +102,11 @@ function OrderSummary() {
           })}
         </tbody>
       </table>
-      <div className="flex justify-end font-bold text-xl mt-4">
+      <div className="flex justify-between font-bold text-xl mt-4">
         <span>Total: ${calculateTotalPrice()}</span>
-      </div>
-      <div className="flex justify-end font-bold text-xl mt-4">
         <span>Calories: {calculateTotalCalories()} kcal</span>
-      </div>
-      <div className="flex justify-end font-bold text-xl mt-4">
         <span>Fats: {calculateTotalFats()}g</span>
-      </div>
-      <div className="flex justify-end font-bold text-xl mt-4">
         <span>Carbs: {calculateTotalCarbs()}g</span>
-      </div>
-      <div className="flex justify-end font-bold text-xl mt-4">
         <span>Proteins: {calculateTotalProteins()}g</span>
       </div>
       <button
