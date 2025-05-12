@@ -3,6 +3,7 @@ import Register from "./components/Register";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import CreateOrders from './components/CreateOrders';
+import OrderSummary from './components/OrderSummary';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -19,9 +20,8 @@ function App() {
 
         {/* Create Orders route */}
         <Route path="/create-orders" element={<CreateOrders />} />
-
-        {/* Logout route */}
-        {/* <Route path="/logout" element={<Logout />} /> */}
+        {/* Order Summary route */}
+        <Route path="/order-summary" element={<OrderSummary />} />
       </Routes>
     </BrowserRouter>
   );
