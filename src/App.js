@@ -4,6 +4,7 @@ import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import CreateOrders from './components/CreateOrders';
 import OrderSummary from './components/OrderSummary';
+import PrivateRoute from './components/PrivateRoute';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
@@ -18,10 +19,9 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
 
-        {/* Create Orders route */}
-        <Route path="/create-orders" element={<CreateOrders />} />
-        {/* Order Summary route */}
-        <Route path="/order-summary" element={<OrderSummary />} />
+        {/* Private Routes - wrapped inside PrivateRoute */}
+        <Route path="/create-orders" element={<PrivateRoute element={<CreateOrders />} />} />
+        <Route path="/order-summary" element={<PrivateRoute element={<OrderSummary />} />} />
       </Routes>
     </BrowserRouter>
   );
