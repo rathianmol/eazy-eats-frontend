@@ -5,12 +5,20 @@ function OrderSummary() {
   const navigate = useNavigate();
   const selectedMeals = JSON.parse(localStorage.getItem('selectedMeals')) || {};
 
+  // Create an array to hold the meal details in the correct format
+  const orderDetails = Object.keys(selectedMeals).map((mealId) => ({
+    meal_id: mealId,  // The meal ID
+    quantity: selectedMeals[mealId].quantity,  // The quantity selected for that meal
+  }));
+
+  // Calculate total price
+  const totalPrice = orderDetails.reduce((total, meal) => {
+    const mealData = selectedMeals[meal.meal_id];  // Get meal data from selectedMeals
+    return total + mealData.price * meal.quantity; // Calculate total price for each meal
+  }, 0).toFixed(2);
+
   const handleFinalizeOrder = () => {
     const token = localStorage.getItem('token');
-    const orderDetails = Object.keys(selectedMeals).map((mealId) => ({
-      meal_id: mealId,
-      quantity: selectedMeals[mealId].quantity,
-    }));
 
     fetch('http://localhost:8000/api/v1/orders', {
       method: 'POST',
@@ -18,7 +26,10 @@ function OrderSummary() {
         'Content-Type': 'application/json',
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ meals: orderDetails }),
+      body: JSON.stringify({
+        meals: orderDetails, // Pass the meals array
+        total_price: totalPrice, // Pass the total price
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
@@ -30,42 +41,6 @@ function OrderSummary() {
         console.error('Error placing order:', error);
         alert('There was an error with your order.');
       });
-  };
-
-  const calculateTotalPrice = () => {
-    return Object.keys(selectedMeals).reduce((total, mealId) => {
-      const meal = selectedMeals[mealId];
-      const price = parseFloat(meal.price);
-      return total + price * meal.quantity;
-    }, 0).toFixed(2);
-  };
-
-  const calculateTotalCalories = () => {
-    return Object.keys(selectedMeals).reduce((total, mealId) => {
-      const meal = selectedMeals[mealId];
-      return total + meal.calories * meal.quantity;
-    }, 0);
-  };
-
-  const calculateTotalFats = () => {
-    return Object.keys(selectedMeals).reduce((total, mealId) => {
-      const meal = selectedMeals[mealId];
-      return total + meal.fats * meal.quantity;
-    }, 0);
-  };
-
-  const calculateTotalCarbs = () => {
-    return Object.keys(selectedMeals).reduce((total, mealId) => {
-      const meal = selectedMeals[mealId];
-      return total + meal.carbs * meal.quantity;
-    }, 0);
-  };
-
-  const calculateTotalProteins = () => {
-    return Object.keys(selectedMeals).reduce((total, mealId) => {
-      const meal = selectedMeals[mealId];
-      return total + meal.proteins * meal.quantity;
-    }, 0);
   };
 
   return (
@@ -103,11 +78,11 @@ function OrderSummary() {
         </tbody>
       </table>
       <div className="flex justify-between font-bold text-xl mt-4">
-        <span>Total: ${calculateTotalPrice()}</span>
-        <span>Calories: {calculateTotalCalories()} kcal</span>
-        <span>Fats: {calculateTotalFats()}g</span>
-        <span>Carbs: {calculateTotalCarbs()}g</span>
-        <span>Proteins: {calculateTotalProteins()}g</span>
+        <span>Total: ${totalPrice}</span>
+        <span>Calories: {Object.keys(selectedMeals).reduce((total, mealId) => total + (selectedMeals[mealId].calories * selectedMeals[mealId].quantity), 0)} kcal</span>
+        <span>Fats: {Object.keys(selectedMeals).reduce((total, mealId) => total + (selectedMeals[mealId].fats * selectedMeals[mealId].quantity), 0)}g</span>
+        <span>Carbs: {Object.keys(selectedMeals).reduce((total, mealId) => total + (selectedMeals[mealId].carbs * selectedMeals[mealId].quantity), 0)}g</span>
+        <span>Proteins: {Object.keys(selectedMeals).reduce((total, mealId) => total + (selectedMeals[mealId].proteins * selectedMeals[mealId].quantity), 0)}g</span>
       </div>
       <button
         onClick={handleFinalizeOrder}
