@@ -39,6 +39,7 @@ function Navbar() {
             // Links for logged-in users
             <>
               <Link to="/create-orders" className="text-white">Create Order</Link>
+              <Link to="/user-orders" className="text-white">My Orders</Link>
               <button onClick={handleLogout} className="text-white">Logout</button> {/* Logout button */}
             </>
           ) : (

@@ -34,7 +34,7 @@ function OrderSummary() {
       .then((response) => response.json())
       .then((data) => {
         alert('Order placed successfully!');
-        navigate('/');
+        navigate('/user-orders');
         localStorage.removeItem('selectedMeals');
       })
       .catch((error) => {
